@@ -1,0 +1,250 @@
+<!DOCTYPE>
+
+<html lang="en">
+
+<head>
+    <title>cytoscape-edgehandles.js demo</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-edgehandles@3.6.0/cytoscape-edgehandles.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+
+    <style>
+        body {
+            font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+            font-size: 14px;
+        }
+
+        #cy {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        h1 {
+            opacity: 0.5;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        #buttons {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 99999;
+        }
+        .ring{
+            color: red;
+        }
+    </style>
+
+    <script>
+
+        function populateChannels() {
+            for (let i = 0; i < nodeList.length; i++) {
+                let next = i+1;
+                if (next === nodeList.length){
+                    next =0;
+                }
+                // console.log(nodeList[next])
+                console.log(`source: ${i} target: ${next}`)
+                edges.push({data: {source: nodeList[i],target: nodeList[next]}})
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            populateNodes();
+            populateChannels();
+            var cy = window.cy = cytoscape({
+                container: document.getElementById('cy'),
+
+                layout: {
+                    name: 'circle',
+                    rows: 1000,
+                    cols: 100
+                },
+
+                style: [
+                    {
+                        selector: 'node[name]',
+                        style: {
+                            'content': 'data(name)'
+                        }
+                    },
+
+                    {
+                        selector: 'edge',
+                        style: {
+                            'curve-style': 'bezier',
+                            'target-arrow-shape': 'triangle'
+                        }
+                    },
+
+                    // some style for the extension
+
+                    {
+                        selector: '.eh-handle',
+                        style: {
+                            'background-color': 'red',
+                            'width': 12,
+                            'height': 12,
+                            'shape': 'ellipse',
+                            'overlay-opacity': 0,
+                            'border-width': 12, // makes the handle easier to hit
+                            'border-opacity': 0
+                        }
+                    },
+
+                    {
+                        selector: '.eh-hover',
+                        style: {
+                            'background-color': 'red'
+                        }
+                    },
+
+                    {
+                        selector: '.eh-source',
+                        style: {
+                            'border-width': 2,
+                            'border-color': 'red'
+                        }
+                    },
+
+                    {
+                        selector: '.eh-target',
+                        style: {
+                            'border-width': 2,
+                            'border-color': 'red'
+                        }
+                    },
+
+                    {
+                        selector: '.eh-preview, .eh-ghost-edge',
+                        style: {
+                            'background-color': 'red',
+                            'line-color': 'red',
+                            'target-arrow-color': 'red',
+                            'source-arrow-color': 'red'
+                        }
+                    },
+
+                    {
+                        selector: '.eh-ghost-edge.eh-preview-active',
+                        style: {
+                            'opacity': 0
+                        }
+                    },
+                    {
+                        selector: '.hidden',
+                        css: {
+                            'display': 'none'
+                        }
+                    },
+                    {
+                        selector: '.ring',
+                        css:{
+                            'background-color':'red'
+                        }
+                    }
+                ],
+                elements:{
+                    nodes,
+                    edges
+                }
+            });
+
+
+        });
+        function populateNodes(){
+            nodeList.forEach((node) =>{
+                nodes.push({data: {id:node, name:node},classes: ['ring']});
+            });
+        }
+        let nodes = [];
+        let edges = [];
+        let nodeList = [
+        "@Wimwim0",
+        "@KvO67",
+        "@schaafijs",
+        "@Arnoo0",
+        "@StammisIO",
+        "@Slaapyhoofd",
+        "@Ruudiano",
+
+        "@RabbitHoleMoney",
+        "@hsware",
+        "@Bardesss",
+        "@Stijnmaarfijn",
+        "@HansvanWessel",
+        "@Pensionado6",
+        "@TinodeVries",
+        "@N1C_O",
+
+        "@Steppie13",
+        "@WolligSchaap",
+        "@DeToekan",
+        "@BitCoinBastrt",
+        "@NoGoodNode",
+        "@DouzePoints",
+        "@Frodo7",
+        "@TeeeeeJaaaay",
+
+        "@kapital8one",
+        "@LykkeTrading",
+        "@Thea_Sp",
+        "@mevrouw_brie",
+        "@rebtorr",
+        "@cryptocowboys4",
+        "@Felix7658987",
+        "@Blok100",
+        "@Ludont",
+        "@Len1607",
+        "@Jeroen_R",
+        "@Steed",
+        "@dsbaars",
+        "@macomaco1",
+        "@ebip1",
+        "@edwardhollander",
+
+        "@Jorimax",
+        "@Crptoo",
+        "@jeroen_veen",
+        "@n_ud_i",
+        "@Er1kt",
+        "@ma_dbo",
+        "@ursus_caerulus",
+        "@Prufrock94",
+
+        "@Boewubbo",
+        "@RickyboyII",
+        "Nodig",
+        "@bufo24",
+        "@Frank_Rovers",
+        "@moonshot75",
+        "@Behindthecorner",
+        "@stijnbtc",
+        "@pimmetjepom",
+
+        "@chocoM8M",
+        "@Zandweter",
+        "@krijn",
+        "@Smaart_020",
+        "@NTIM_05",
+        "@Jimmiehendriks",
+        "@Kold_k",
+        "@laptopman"];
+    </script>
+</head>
+
+<body>
+
+<div id="cy"></div>
+
+</body>
+
+</html>
